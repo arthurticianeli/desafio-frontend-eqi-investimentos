@@ -5,7 +5,7 @@ import Input from '../Input';
 
 function IndexingType() {
   return (
-    <VStack alignItems={'left'} spacing={'40px'}>
+    <VStack alignItems={'left'} spacing={'40px'} w="200px" mx="5px">
       <ButtonGroup
         label={'Tipos de indexação'}
         buttons={['PRÉ', 'PÓS', 'FIXADO']}

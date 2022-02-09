@@ -5,7 +5,13 @@ import Input from '../Input';
 
 function Income() {
   return (
-    <VStack alignItems={'left'} spacing={'40px'}>
+    <VStack
+      alignItems={'left'}
+      spacing={'40px'}
+      w="200px"
+      mx="5px"
+      mb={{ base: '50px', sm: '0px' }}
+    >
       <ButtonGroup
         label={'Rendimento'}
         buttons={['Bruto', 'Líquido']}

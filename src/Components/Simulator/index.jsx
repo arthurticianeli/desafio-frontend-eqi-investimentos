@@ -1,4 +1,4 @@
-import { Flex, Grid, GridItem, Heading } from '@chakra-ui/react';
+import { Flex, Heading, VStack } from '@chakra-ui/react';
 import React from 'react';
 import ButtonClean from '../Buttons/ButtonClean';
 import ButtonSubmit from '../Buttons/ButtonSubmit';
@@ -7,25 +7,31 @@ import Indexing from './IndexingType';
 
 function Simulator() {
   return (
-    <Grid rowGap={8} columnGap={20}>
-      <GridItem colSpan={{ base: 1, md: 2 }}>
-        <Heading as="h2" size="lg">
-          Simulador
-        </Heading>
-      </GridItem>
-      <GridItem colSpan={1} minW={'300px'}>
+    <VStack
+      maxWidth={'500px'}
+      w={'full'}
+      spacing={'30px'}
+      mx="auto"
+      mb={{ base: '50px', xl: '0px' }}
+    >
+      <Heading as="h2" size="lg" alignSelf={'flex-start'}>
+        Simulador
+      </Heading>
+
+      <Flex
+        flexWrap={'wrap'}
+        justifyContent={{ base: 'center', sm: 'space-between' }}
+        w="full"
+      >
         <Income />
-      </GridItem>
-      <GridItem colSpan={1} minW={'300px'}>
         <Indexing />
-      </GridItem>
-      <GridItem colSpan={{ base: 1, md: 2 }}>
-        <Flex flexDir={{ base: 'column', sm: 'row' }}>
-          <ButtonClean>Limpar campos</ButtonClean>
-          <ButtonSubmit>Simular</ButtonSubmit>
-        </Flex>
-      </GridItem>
-    </Grid>
+      </Flex>
+
+      <Flex flexDir={{ base: 'column', sm: 'row' }}>
+        <ButtonClean>Limpar campos</ButtonClean>
+        <ButtonSubmit>Simular</ButtonSubmit>
+      </Flex>
+    </VStack>
   );
 }
 
