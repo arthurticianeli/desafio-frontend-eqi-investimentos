@@ -1,9 +1,12 @@
 import { VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useIndicators } from '../../Contexts/Indicators';
 import ButtonGroup from '../GroupButton';
 import Input from '../Input';
 
 function IndexingType() {
+  const { CDI } = useIndicators();
+
   return (
     <VStack alignItems={'left'} spacing={'40px'} w="200px" mx="5px">
       <ButtonGroup
@@ -13,7 +16,7 @@ function IndexingType() {
       />
       <Input label={'Aporte Mensal'} errorText={'Errado'} />
       <Input label={'Rentabilidade'} errorText={'Errado'} />
-      <Input label={'IPCA (ao ano)'} value={'10,06%'} errorText={'Errado'} />
+      <Input label={'CDI (ao ano)'} value={`${CDI}%`} errorText={'Errado'} />
     </VStack>
   );
 }

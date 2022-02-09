@@ -1,9 +1,12 @@
 import { VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useIndicators } from '../../Contexts/Indicators';
 import ButtonGroup from '../GroupButton';
 import Input from '../Input';
 
 function Income() {
+  const { IPCA } = useIndicators();
+
   return (
     <VStack
       alignItems={'left'}
@@ -19,7 +22,7 @@ function Income() {
       />
       <Input label={'Aporte Inicial'} errorText={'Errado'} />
       <Input label={'Prazo (em meses)'} errorText={'Errado'} />
-      <Input label={'IPCA (ao ano)'} value={'10,06%'} errorText={'Errado'} />
+      <Input label={'IPCA (ao ano)'} value={`${IPCA}%`} errorText={'Errado'} />
     </VStack>
   );
 }
