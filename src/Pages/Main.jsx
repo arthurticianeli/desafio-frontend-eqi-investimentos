@@ -2,8 +2,11 @@ import React from 'react';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import Simulator from '../Components/Simulator';
 import SimulationResult from '../Components/SimulationResult';
+import { useSimulations } from '../Contexts/Simulations';
 
 function Main() {
+  const { simulation } = useSimulations();
+
   return (
     <Box
       bg="background"
@@ -17,9 +20,9 @@ function Main() {
       <Heading textAlign={'center'} as="h1" mb="40px">
         Simulador de Investimentos
       </Heading>
-      <Flex flexWrap={'wrap'} justifyContent={'space-between'}>
+      <Flex flexWrap={'wrap'}>
         <Simulator />
-        <SimulationResult />
+        {!!simulation && <SimulationResult />}
       </Flex>
     </Box>
   );
