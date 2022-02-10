@@ -6,7 +6,7 @@ import {
   Text,
   useMediaQuery,
 } from '@chakra-ui/react';
-import React from 'react';
+
 import { useSimulations } from '../../Contexts/Simulations';
 
 function Projection() {

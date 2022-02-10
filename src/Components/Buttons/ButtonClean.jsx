@@ -1,7 +1,6 @@
 import { Button as ChakraButton } from '@chakra-ui/react';
-import React from 'react';
 
-function ButtonClean({ children }) {
+const Button = ({ children, ...rest }) => {
   return (
     <ChakraButton
       isFullWidth
@@ -10,10 +9,11 @@ function ButtonClean({ children }) {
       bg={'transparent'}
       mr={{ base: '0px', sm: '20px' }}
       mb={{ base: '20px', sm: '0px' }}
+      {...rest}
     >
       {children}
     </ChakraButton>
   );
-}
+};
 
-export default ButtonClean;
+export default Button;

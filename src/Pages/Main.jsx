@@ -22,6 +22,7 @@ function Main() {
       </Heading>
       <Flex flexWrap={'wrap'}>
         <Simulator />
+
         {!!simulation && <SimulationResult />}
       </Flex>
     </Box>

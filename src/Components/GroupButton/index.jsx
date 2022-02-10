@@ -1,50 +1,43 @@
-import { CheckIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Button,
-  ButtonGroup as ButtonGroupChakra,
-  Flex,
-  FormLabel,
-} from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { CheckIcon } from '@chakra-ui/icons';
+import { Button, ButtonGroup as ButtonGroupChakra } from '@chakra-ui/react';
+import React, { forwardRef, useRef, useState } from 'react';
 
 // prop buttons pass a array of strings (buttons names)
 // prop initialSelected recives the id of the default selected button
 
-function ButtonGroup({ label, buttons, initialSelected }) {
+const ButtonGroupBase = (
+  { label, buttons, initialSelected, name, ...rest },
+  ref
+) => {
   const [buttonSelected, setButtonSelected] = useState(initialSelected);
 
   const handleClick = event => {
-    setButtonSelected(event.target.id);
+    console.log(event.target);
+    setButtonSelected(event.target.value);
   };
 
   return (
-    <Box>
-      <Flex justifyContent={'space-between'}>
-        <FormLabel>{label}</FormLabel>
-        <InfoOutlineIcon />
-      </Flex>
-      <ButtonGroupChakra w="full" size={'lg'} isAttached>
-        {buttons.map((buttonText, i) => (
-          <Button
-            w="full"
-            key={i}
-            id={i}
-            fontSize={'12px'}
-            fontWeight={'400'}
-            border={'1px black solid'}
-            bg={buttonSelected === i.toString() ? 'primary' : 'transparent'}
-            color={buttonSelected === i.toString() ? 'white' : 'black'}
-            _hover={{ bg: buttonSelected === i.toString() && 'primary' }}
-            onClick={handleClick}
-          >
-            {buttonSelected === i.toString() && <CheckIcon mr="2px" />}
-            {buttonText}
-          </Button>
-        ))}
-      </ButtonGroupChakra>
-    </Box>
+    <ButtonGroupChakra w="full" size={'lg'} isAttached>
+      {buttons.map((option, i) => (
+        <Button
+          name={name}
+          value={option}
+          onClick={handleClick}
+          w="full"
+          key={i}
+          fontSize={'12px'}
+          fontWeight={'400'}
+          border={'1px black solid'}
+          bg={buttonSelected === option ? 'primary' : 'transparent'}
+          color={buttonSelected === option ? 'white' : 'black'}
+          _hover={{ bg: buttonSelected === option && 'primary' }}
+        >
+          {buttonSelected === option && <CheckIcon mr="2px" />}
+          {option}
+        </Button>
+      ))}
+    </ButtonGroupChakra>
   );
-}
+};
 
-export default ButtonGroup;
+export const ButtonGroup = forwardRef(ButtonGroupBase);
