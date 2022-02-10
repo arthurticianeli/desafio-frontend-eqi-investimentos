@@ -1,5 +1,4 @@
 import { Heading, SimpleGrid, VStack } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
 import { useSimulations } from '../../Contexts/Simulations';
 
 import Card from './Card';

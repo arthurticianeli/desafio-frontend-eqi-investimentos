@@ -1,5 +1,4 @@
 import { Container, Heading, Text } from '@chakra-ui/react';
-import React from 'react';
 
 function Card({ title, value, green }) {
   return (
