@@ -10,21 +10,25 @@ const useIndicators = () => {
 };
 
 const IndicatorsProvider = ({ children }) => {
-  const [CDI, setCDI] = useState(Number);
-  const [IPCA, setIPCA] = useState(Number);
+  const [isLoading, setIsLoading] = useState(true);
+  const [CDI, setCDI] = useState(0);
+  const [IPCA, setIPCA] = useState(0);
 
-  const getIndicators = () => {
-    api.get('/indicadores?nome=cdi').then(response => {
+  const getIndicators = async () => {
+    setIsLoading(true);
+    await api.get('/indicadores?nome=cdi').then(response => {
       setCDI(response.data[0].valor);
     });
-    api.get('/indicadores?nome=ipca').then(response => {
+    await api.get('/indicadores?nome=ipca').then(response => {
       setIPCA(response.data[0].valor);
+      setIsLoading(false);
     });
   };
 
   return (
     <IndicatorsContext.Provider
       value={{
+        isLoading,
         CDI,
         IPCA,
         getIndicators,

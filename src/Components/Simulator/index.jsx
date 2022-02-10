@@ -1,4 +1,4 @@
-import { Flex, Heading, VStack } from '@chakra-ui/react';
+import { Box, Flex, Heading, VStack } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { useIndicators } from '../../Contexts/Indicators';
 import ButtonClean from '../Buttons/ButtonClean';
@@ -7,11 +7,13 @@ import Income from './Income';
 import Indexing from './IndexingType';
 
 function Simulator() {
-  const { getIndicators } = useIndicators();
+  const { isLoading, getIndicators } = useIndicators();
 
   useEffect(() => {
     getIndicators();
   }, []);
+
+  if (isLoading) return <Box>Loading...</Box>;
 
   return (
     <VStack
