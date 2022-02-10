@@ -1,6 +1,7 @@
 import { VStack } from '@chakra-ui/react';
 import React from 'react';
 import { useIndicators } from '../../Contexts/Indicators';
+
 import ButtonGroup from '../GroupButton';
 import Input from '../Input';
 

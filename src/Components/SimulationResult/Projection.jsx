@@ -45,17 +45,16 @@ function Projection() {
                 alignItems={'flex-end'}
                 w={{ base: '', sm: 'full' }}
                 h="100%"
+                key={i}
               >
                 <Flex flexDir={'column'} justifyContent={'flex-end'} h="100%">
                   <Box
-                    key={i}
                     h={{ base: 'full', sm: `${comAporte[item] / 100}%` }}
                     w={{ base: `${comAporte[item] / 100}%`, sm: 'full' }}
                     bg={'primary'}
                   />
 
                   <Box
-                    key={i}
                     h={{ base: 'full', sm: `${semAporte[item] / 100}px` }}
                     w={{ base: `${semAporte[item] / 100}`, sm: 'full' }}
                     bg={'black'}
