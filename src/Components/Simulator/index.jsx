@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Flex, Heading, VStack } from '@chakra-ui/react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -6,13 +6,16 @@ import { useForm } from 'react-hook-form';
 import { useIndicators } from '../../Contexts/Indicators';
 import ButtonReset from '../Buttons/ButtonClean';
 import { ButtonSubmit } from '../Buttons/ButtonSubmit';
-import { ButtonGroup } from '../GroupButton';
+import ButtonGroup from '../GroupButton';
 import { InputForm } from '../InputForm';
 
 import FormControl from '../FormControl';
 
 function Simulator() {
   const { isLoading, CDI, IPCA, getIndicators } = useIndicators();
+
+  const [incomingTypeData, setIncomingTypeData] = useState('Bruto');
+  const [indexadtionTypeData, setIndexadtionTypeData] = useState('PRÉ');
 
   const formSchema = yup.object().shape({
     initialContribution: yup.string().required('Preencha o campo'),
@@ -21,8 +24,6 @@ function Simulator() {
     revenue: yup.string().required('Preencha o campo'),
     cdi: yup.string().required('Preencha o campo'),
     ipca: yup.string().required('Preencha o campo'),
-    incomingType: yup.string(),
-    indexationType: yup.string(),
   });
 
   const {
@@ -33,7 +34,7 @@ function Simulator() {
   } = useForm({ resolver: yupResolver(formSchema) });
 
   const onSubmit = data => {
-    console.log(data);
+    console.log({ ...data, incomingTypeData, indexadtionTypeData });
   };
 
   useEffect(() => {
@@ -69,10 +70,9 @@ function Simulator() {
         >
           <FormControl icon label={'Rendimento'}>
             <ButtonGroup
-              name="incomingType"
+              setData={setIncomingTypeData}
               buttons={['Bruto', 'Líquido']}
               initialSelected={'Bruto'}
-              {...register('incomingType')}
             />
           </FormControl>
 
@@ -89,6 +89,7 @@ function Simulator() {
           <FormControl label={'Prazo (em meses)'} errors={errors.term}>
             <InputForm name="term" {...register('term')} />
           </FormControl>
+
           <FormControl label={'IPCA (ao ano)'} errors={errors.ipca}>
             <InputForm
               name="ipca"
@@ -101,10 +102,9 @@ function Simulator() {
         <VStack alignItems={'left'} spacing={'40px'} w="200px" mx="5px">
           <FormControl icon label={'Rendimento'}>
             <ButtonGroup
-              name="indexationType"
+              setData={setIndexadtionTypeData}
               buttons={['PRÉ', 'PÓS', 'FIXADO']}
               initialSelected={'PRÉ'}
-              {...register('indexationType')}
             />
           </FormControl>
           <FormControl
