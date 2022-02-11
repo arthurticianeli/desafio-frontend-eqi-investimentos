@@ -10,12 +10,18 @@ import ButtonGroup from '../GroupButton';
 import { InputForm } from '../InputForm';
 
 import FormControl from '../FormControl';
+import { useSimulations } from '../../Contexts/Simulations';
 
 function Simulator() {
   const { isLoading, CDI, IPCA, getIndicators } = useIndicators();
+  const { getSimulation } = useSimulations();
 
-  const [incomingTypeData, setIncomingTypeData] = useState('Bruto');
-  const [indexadtionTypeData, setIndexadtionTypeData] = useState('PRÉ');
+  useEffect(() => {
+    getIndicators();
+  }, []);
+
+  const [incomingTypeData, setIncomingTypeData] = useState('bruto');
+  const [indexadtionTypeData, setIndexadtionTypeData] = useState('pre');
 
   const formSchema = yup.object().shape({
     initialContribution: yup
@@ -65,8 +71,9 @@ function Simulator() {
     reset,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm({ resolver: yupResolver(formSchema), defaultValues: {} });
+  } = useForm({ resolver: yupResolver(formSchema) });
 
+  // watch the fields on the formSchema (line 26)
   const watchFields = watch([
     'initialContribution',
     'term',
@@ -74,15 +81,13 @@ function Simulator() {
     'revenue',
   ]);
 
+  // pass trought the watched fields checking if it is empty
   const isEmptyWatcher = watchFields.every(e => e === undefined || e === '');
 
   const onSubmit = data => {
-    console.log({ ...data, incomingTypeData, indexadtionTypeData });
+    console.log(data);
+    getSimulation({ ...data, incomingTypeData, indexadtionTypeData });
   };
-
-  useEffect(() => {
-    getIndicators();
-  }, []);
 
   if (isLoading) return <Box>Loading...</Box>;
 
@@ -114,8 +119,10 @@ function Simulator() {
           <FormControl icon label={'Rendimento'}>
             <ButtonGroup
               setData={setIncomingTypeData}
-              buttons={['Bruto', 'Líquido']}
-              initialSelected={'Bruto'}
+              buttons={[
+                { title: 'Bruto', value: 'bruto', id: '0' },
+                { title: 'Líquido', value: 'liquido', id: '1' },
+              ]}
             />
           </FormControl>
 
@@ -148,8 +155,11 @@ function Simulator() {
           <FormControl icon label={'Rendimento'}>
             <ButtonGroup
               setData={setIndexadtionTypeData}
-              buttons={['PRÉ', 'PÓS', 'FIXADO']}
-              initialSelected={'PRÉ'}
+              buttons={[
+                { title: 'PRÉ', value: 'pre', id: '0' },
+                { title: 'PÓS', value: 'pos', id: '1' },
+                { title: 'FIXADO', value: 'ipca', id: '2' },
+              ]}
             />
           </FormControl>
           <FormControl
