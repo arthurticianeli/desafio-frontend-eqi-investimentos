@@ -18,12 +18,39 @@ function Simulator() {
   const [indexadtionTypeData, setIndexadtionTypeData] = useState('PRÉ');
 
   const formSchema = yup.object().shape({
-    initialContribution: yup.string().required('Preencha o campo'),
-    term: yup.string().required('Preencha o campo'),
-    monthlyContribution: yup.string().required('Preencha o campo'),
-    revenue: yup.string().required('Preencha o campo'),
-    cdi: yup.string().required('Preencha o campo'),
-    ipca: yup.string().required('Preencha o campo'),
+    initialContribution: yup
+      .string()
+      .required('Preencha o campo')
+      .matches(/^[0-9]+$/, 'Aporte deve ser apenas número'),
+    term: yup
+      .string()
+      .required('Preencha o campo')
+      .matches(/^[0-9]+$/, 'Prazo deve ser apenas número'),
+    monthlyContribution: yup
+      .string()
+      .required('Preencha o campo')
+      .matches(/^[0-9]+$/, 'Aporte deve ser apenas número'),
+    revenue: yup
+      .string()
+      .required('Preencha o campo')
+      .matches(
+        '\\d+(?:\\.\\d+)?%',
+        'Rentabilidade deve ser uma porcentagem, exemplo "10%"'
+      ),
+    cdi: yup
+      .string()
+      .required('Preencha o campo')
+      .matches(
+        '\\d+(?:\\.\\d+)?%',
+        'IPCA deve ser uma porcentagem, exemplo "10%"'
+      ),
+    ipca: yup
+      .string()
+      .required('Preencha o campo')
+      .matches(
+        '\\d+(?:\\.\\d+)?%',
+        'IPCA deve ser uma porcentagem, exemplo "10%"'
+      ),
   });
 
   const {
@@ -93,11 +120,12 @@ function Simulator() {
             <InputForm
               name="initialContribution"
               {...register('initialContribution')}
+              errors={errors.initialContribution}
             />
           </FormControl>
 
           <FormControl label={'Prazo (em meses)'} errors={errors.term}>
-            <InputForm name="term" {...register('term')} />
+            <InputForm name="term" {...register('term')} errors={errors.term} />
           </FormControl>
 
           <FormControl label={'IPCA (ao ano)'} errors={errors.ipca}>
@@ -105,6 +133,7 @@ function Simulator() {
               name="ipca"
               {...register('ipca')}
               defaultValue={`${IPCA}%`}
+              errors={errors.ipca}
             />
           </FormControl>
         </VStack>
@@ -124,16 +153,22 @@ function Simulator() {
             <InputForm
               name="monthlyContribution"
               {...register('monthlyContribution')}
+              errors={errors.monthlyContribution}
             />
           </FormControl>
           <FormControl label={'Rentabilidade'} errors={errors.revenue}>
-            <InputForm name="revenue" {...register('revenue')} />
+            <InputForm
+              name="revenue"
+              {...register('revenue')}
+              errors={errors.revenue}
+            />
           </FormControl>
           <FormControl label={'CDI (ao ano)'} errors={errors.cdi}>
             <InputForm
               name="cdi"
               {...register('cdi')}
               defaultValue={`${CDI}%`}
+              errors={errors.cdi}
             />
           </FormControl>
         </VStack>
