@@ -6,8 +6,9 @@ import {
   Text,
   useMediaQuery,
 } from '@chakra-ui/react';
-
+import { useEffect, useState } from 'react';
 import { useSimulations } from '../../Contexts/Simulations';
+import Chart from './Chart';
 
 function Projection() {
   const [isMobile] = useMediaQuery('(max-width: 30em)');
@@ -21,7 +22,9 @@ function Projection() {
       <Heading as="h3" size={'md'} w="full">
         Projeção de Valores
       </Heading>
-      <Box w={{ base: 'fit-content', sm: 'full' }}>
+      <Chart comAporte={comAporte} semAporte={semAporte} />
+
+      {/* <Box w={{ base: 'fit-content', sm: 'full' }}>
         <Flex position={'relative'} h="150px">
           <Text
             position={'absolute'}
@@ -39,24 +42,24 @@ function Projection() {
             w="full"
             h="100%"
           >
-            {Object.keys(comAporte).map((item, i) => (
+            {Object.keys(comAporte).map((key, i) => (
               <Flex
                 flexDir={{ base: 'row-reverse', sm: 'row' }}
                 alignItems={'flex-end'}
                 w={{ base: '', sm: 'full' }}
                 h="100%"
-                key={i}
+                key={key}
               >
                 <Flex flexDir={'column'} justifyContent={'flex-end'} h="100%">
                   <Box
-                    h={{ base: 'full', sm: `${comAporte[item] / 100}%` }}
-                    w={{ base: `${comAporte[item] / 100}%`, sm: 'full' }}
+                    h={{ base: 'full', sm: `${comAporte[key] / 100}%` }}
+                    w={{ base: `${comAporte[key] / 100}%`, sm: 'full' }}
                     bg={'primary'}
                   />
 
                   <Box
-                    h={{ base: 'full', sm: `${semAporte[item] / 100}px` }}
-                    w={{ base: `${semAporte[item] / 100}`, sm: 'full' }}
+                    h={{ base: 'full', sm: `${semAporte[key] / 100}px` }}
+                    w={{ base: `${semAporte[key] / 100}`, sm: 'full' }}
                     bg={'black'}
                     mt={{ base: '0', sm: '2px' }}
                     mr={{ base: '2px', sm: '0' }}
@@ -96,7 +99,7 @@ function Projection() {
             </Flex>
           </Center>
         </Box>
-      </Box>
+      </Box> */}
     </>
   );
 }
