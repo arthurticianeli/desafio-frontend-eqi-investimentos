@@ -21,7 +21,10 @@ function Simulator() {
     initialContribution: yup
       .string()
       .required('Preencha o campo')
-      .matches(/^[0-9]+$/, 'Aporte deve ser apenas número'),
+      .matches(
+        /^R\$(\d{1,3}(\.\d{3})*|\d+)(\,\d{2})?$/,
+        'Aporte deve ser em Real (R$1.000,00)'
+      ),
     term: yup
       .string()
       .required('Preencha o campo')
@@ -29,7 +32,10 @@ function Simulator() {
     monthlyContribution: yup
       .string()
       .required('Preencha o campo')
-      .matches(/^[0-9]+$/, 'Aporte deve ser apenas número'),
+      .matches(
+        /^R\$(\d{1,3}(\.\d{3})*|\d+)(\,\d{2})?$/,
+        'Aporte deve ser em Real (R$1.000,00)'
+      ),
     revenue: yup
       .string()
       .required('Preencha o campo')
@@ -42,7 +48,7 @@ function Simulator() {
       .required('Preencha o campo')
       .matches(
         '\\d+(?:\\.\\d+)?%',
-        'IPCA deve ser uma porcentagem, exemplo "10%"'
+        'CDI deve ser uma porcentagem, exemplo "10%"'
       ),
     ipca: yup
       .string()
