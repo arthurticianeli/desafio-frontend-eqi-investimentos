@@ -11,7 +11,7 @@ function FormControl({ children, label, icon, errors }) {
   return (
     <FormControlChakra isInvalid={!!errors} errortext={errors?.message}>
       <Flex justifyContent={'space-between'}>
-        <FormLabel>{label}</FormLabel>
+        <FormLabel color={errors && 'red'}>{label}</FormLabel>
         {icon && <InfoOutlineIcon />}
       </Flex>
       {children}

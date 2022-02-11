@@ -1,6 +1,6 @@
 import { CheckIcon } from '@chakra-ui/icons';
 import { Button, ButtonGroup as ButtonGroupChakra } from '@chakra-ui/react';
-import React, { forwardRef, useState } from 'react';
+import { useState } from 'react';
 
 // prop buttons pass a array of strings (buttons names)
 // prop initialSelected recives the id of the default selected button
