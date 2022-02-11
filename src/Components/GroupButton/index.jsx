@@ -1,28 +1,23 @@
 import { CheckIcon } from '@chakra-ui/icons';
 import { Button, ButtonGroup as ButtonGroupChakra } from '@chakra-ui/react';
-import React, { forwardRef, useRef, useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 
 // prop buttons pass a array of strings (buttons names)
 // prop initialSelected recives the id of the default selected button
 
-const ButtonGroupBase = (
-  { label, buttons, initialSelected, name, ...rest },
-  ref
-) => {
+const ButtonGroup = ({ buttons, initialSelected, setData }) => {
   const [buttonSelected, setButtonSelected] = useState(initialSelected);
 
-  const handleClick = event => {
-    console.log(event.target);
+  const handleChange = event => {
     setButtonSelected(event.target.value);
+    setData(event.target.value);
   };
 
   return (
     <ButtonGroupChakra w="full" size={'lg'} isAttached>
       {buttons.map((option, i) => (
         <Button
-          name={name}
           value={option}
-          onClick={handleClick}
           w="full"
           key={i}
           fontSize={'12px'}
@@ -31,6 +26,7 @@ const ButtonGroupBase = (
           bg={buttonSelected === option ? 'primary' : 'transparent'}
           color={buttonSelected === option ? 'white' : 'black'}
           _hover={{ bg: buttonSelected === option && 'primary' }}
+          onClick={handleChange}
         >
           {buttonSelected === option && <CheckIcon mr="2px" />}
           {option}
@@ -40,4 +36,4 @@ const ButtonGroupBase = (
   );
 };
 
-export const ButtonGroup = forwardRef(ButtonGroupBase);
+export default ButtonGroup;
