@@ -30,8 +30,18 @@ function Simulator() {
     handleSubmit,
     register,
     reset,
+    watch,
     formState: { errors, isSubmitting },
-  } = useForm({ resolver: yupResolver(formSchema) });
+  } = useForm({ resolver: yupResolver(formSchema), defaultValues: {} });
+
+  const watchFields = watch([
+    'initialContribution',
+    'term',
+    'monthlyContribution',
+    'revenue',
+  ]);
+
+  const isEmptyWatcher = watchFields.every(e => e === undefined || e === '');
 
   const onSubmit = data => {
     console.log({ ...data, incomingTypeData, indexadtionTypeData });
@@ -128,10 +138,11 @@ function Simulator() {
           </FormControl>
         </VStack>
       </Flex>
+
       <Flex flexDir={{ base: 'column', sm: 'row' }}>
         <ButtonReset onClick={() => reset()}>Limpar campos</ButtonReset>
         <ButtonSubmit
-          correct={!Object.keys(errors).length}
+          correct={!Object.keys(errors).length && !isEmptyWatcher}
           type="submit"
           isLoading={isSubmitting}
         >
