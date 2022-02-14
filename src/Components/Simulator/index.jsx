@@ -11,6 +11,7 @@ import { InputForm } from '../InputForm';
 
 import FormControl from '../FormControl';
 import { useSimulations } from '../../Contexts/Simulations';
+import Loading from '../Loading';
 
 function Simulator() {
   const { isLoading, CDI, IPCA, getIndicators } = useIndicators();
@@ -85,11 +86,10 @@ function Simulator() {
   const isEmptyWatcher = watchFields.every(e => e === undefined || e === '');
 
   const onSubmit = data => {
-    console.log(data);
     getSimulation({ ...data, incomingTypeData, indexadtionTypeData });
   };
 
-  if (isLoading) return <Box>Loading...</Box>;
+  if (isLoading) return <Loading />;
 
   return (
     <VStack
