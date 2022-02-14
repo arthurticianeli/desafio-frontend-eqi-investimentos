@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Flex, Heading, VStack } from '@chakra-ui/react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
-import { useIndicators } from '../../Contexts/Indicators';
-import ButtonReset from '../Buttons/ButtonClean';
-import { ButtonSubmit } from '../Buttons/ButtonSubmit';
-import ButtonGroup from '../GroupButton';
-import { InputForm } from '../InputForm';
+import { FormProvider, useForm } from 'react-hook-form';
 
-import FormControl from '../FormControl';
+import {
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Heading,
+  Input,
+  VStack,
+} from '@chakra-ui/react';
+
+import { useIndicators } from '../../Contexts/Indicators';
+import { ButtonSubmit } from '../Buttons/ButtonSubmit';
+import ButtonReset from '../Buttons/ButtonClean';
+
 import { useSimulations } from '../../Contexts/Simulations';
 import Loading from '../Loading';
+import InputCurrency from '../Inputs/InputCurrency';
+import InputPercentage from '../Inputs/InputPercentage';
+import InputNumber from '../Inputs/InputNumber';
+import InputGroup from '../Inputs/InputGroup';
 
 function Simulator() {
   const { isLoading, CDI, IPCA, getIndicators } = useIndicators();
@@ -19,71 +30,66 @@ function Simulator() {
 
   useEffect(() => {
     getIndicators();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [incomingTypeData, setIncomingTypeData] = useState('bruto');
   const [indexadtionTypeData, setIndexadtionTypeData] = useState('pre');
 
   const formSchema = yup.object().shape({
-    initialContribution: yup
-      .string()
-      .required('Preencha o campo')
-      .matches(
-        /^R\$(\d{1,3}(\.\d{3})*|\d+)(\,\d{2})?$/,
-        'Aporte deve ser em Real (R$1.000,00)'
-      ),
-    term: yup
-      .string()
-      .required('Preencha o campo')
-      .matches(/^[0-9]+$/, 'Prazo deve ser apenas número'),
-    monthlyContribution: yup
-      .string()
-      .required('Preencha o campo')
-      .matches(
-        /^R\$(\d{1,3}(\.\d{3})*|\d+)(\,\d{2})?$/,
-        'Aporte deve ser em Real (R$1.000,00)'
-      ),
-    revenue: yup
-      .string()
-      .required('Preencha o campo')
-      .matches(
-        '\\d+(?:\\.\\d+)?%',
-        'Rentabilidade deve ser uma porcentagem, exemplo "10%"'
-      ),
-    cdi: yup
-      .string()
-      .required('Preencha o campo')
-      .matches(
-        '\\d+(?:\\.\\d+)?%',
-        'CDI deve ser uma porcentagem, exemplo "10%"'
-      ),
-    ipca: yup
-      .string()
-      .required('Preencha o campo')
-      .matches(
-        '\\d+(?:\\.\\d+)?%',
-        'IPCA deve ser uma porcentagem, exemplo "10%"'
-      ),
+    initialContribution: yup.number().typeError('Somente números'),
+    // .required('Preencha o campo')
+    // .matches(
+    //   /^R\$(\d{1,3}(\.\d{3})*|\d+)(\,\d{2})?$/,
+    //   'Aporte deve ser em Real (R$1.000,00)'
+    // ),
+    term: yup.string(),
+    // .required('Preencha o campo')
+    // .matches(/^[0-9]+$/, 'Prazo deve ser apenas número'),
+    monthlyContribution: yup.number().typeError('Somente números'),
+    // .required('Preencha o campo')
+    // .matches(
+    //   /^R\$(\d{1,3}(\.\d{3})*|\d+)(\,\d{2})?$/,
+    //   'Aporte deve ser em Real (R$1.000,00)'
+    // ),
+    revenue: yup.string(),
+    // .required('Preencha o campo')
+    // .matches(
+    //   '\\d+(?:\\.\\d+)?%',
+    //   'Rentabilidade deve ser uma porcentagem, exemplo "10%"'
+    // ),
+    cdi: yup.string(),
+    // .required('Preencha o campo')
+    // .matches(
+    //   '\\d+(?:\\.\\d+)?%',
+    //   'CDI deve ser uma porcentagem, exemplo "10%"'
+    // ),
+    ipca: yup.string(),
+    // .required('Preencha o campo')
+    // .matches(
+    //   '\\d+(?:\\.\\d+)?%',
+    //   'IPCA deve ser uma porcentagem, exemplo "10%"'
+    // ),
   });
 
   const {
-    handleSubmit,
     register,
+    handleSubmit,
     reset,
-    watch,
-    formState: { errors, isSubmitting },
-  } = useForm({ resolver: yupResolver(formSchema) });
-
-  // watch the fields on the formSchema (line 26)
-  const watchFields = watch([
-    'initialContribution',
-    'term',
-    'monthlyContribution',
-    'revenue',
-  ]);
-
-  // pass trought the watched fields checking if it is empty
-  const isEmptyWatcher = watchFields.every(e => e === undefined || e === '');
+    formState: { errors },
+  } = useForm({
+    mode: 'onTouched',
+    reValidateMode: 'onSubmit',
+    resolver: yupResolver(formSchema),
+    defaultValues: {
+      initialContribution: '',
+      term: '',
+      monthlyContribution: '',
+      revenue: '',
+      cdi: CDI,
+      ipca: IPCA,
+    },
+  });
 
   const onSubmit = data => {
     getSimulation({ ...data, incomingTypeData, indexadtionTypeData });
@@ -116,89 +122,145 @@ function Simulator() {
           mx="5px"
           mb={{ base: '50px', sm: '0px' }}
         >
-          <FormControl icon label={'Rendimento'}>
-            <ButtonGroup
-              setData={setIncomingTypeData}
-              buttons={[
-                { title: 'Bruto', value: 'bruto', id: '0' },
-                { title: 'Líquido', value: 'liquido', id: '1' },
-              ]}
-            />
-          </FormControl>
+          <InputGroup
+            label={'Rendimento'}
+            setIncomingTypeData={setIncomingTypeData}
+            buttons={[
+              { title: 'Bruto', value: 'bruto', id: '0' },
+              { title: 'Líquido', value: 'liquido', id: '1' },
+            ]}
+          />
 
-          <FormControl
-            label={'Aporte Inicial'}
-            errors={errors.initialContribution}
-          >
-            <InputForm
-              name="initialContribution"
+          <FormControl>
+            <FormLabel color={!!errors?.initialContribution && 'red'}>
+              Aporte Inicial
+            </FormLabel>
+            <Input
               {...register('initialContribution')}
-              errors={errors.initialContribution}
+              id={'initialContribution'}
+              variant="unstyled"
+              borderBottom={
+                !!errors?.initialContribution
+                  ? '1px solid red'
+                  : '1px solid black'
+              }
+              borderRadius={'0px'}
             />
+
+            <FormErrorMessage fontSize={'sm'} color="red.500">
+              {errors.initialContribution && errors.initialContribution.message}
+            </FormErrorMessage>
           </FormControl>
 
-          <FormControl label={'Prazo (em meses)'} errors={errors.term}>
-            <InputForm name="term" {...register('term')} errors={errors.term} />
+          <FormControl>
+            <FormLabel color={!!errors?.term && 'red'}>
+              Prazo (em meses)
+            </FormLabel>
+            <Input
+              {...register('term')}
+              id={'term'}
+              variant="unstyled"
+              borderBottom={
+                !!errors?.term ? '1px solid red' : '1px solid black'
+              }
+              borderRadius={'0px'}
+            />
+
+            <FormErrorMessage fontSize={'sm'} color="red.500">
+              {errors.term && errors.term.message}
+            </FormErrorMessage>
           </FormControl>
 
-          <FormControl label={'IPCA (ao ano)'} errors={errors.ipca}>
-            <InputForm
-              name="ipca"
+          <FormControl>
+            <FormLabel color={!!errors?.ipca && 'red'}>IPCA (ao ano)</FormLabel>
+            <Input
               {...register('ipca')}
-              defaultValue={`${IPCA}%`}
-              errors={errors.ipca}
+              id={'ipca'}
+              variant="unstyled"
+              borderBottom={
+                !!errors?.ipca ? '1px solid red' : '1px solid black'
+              }
+              borderRadius={'0px'}
+              defaultValue={IPCA + '%'}
             />
+
+            <FormErrorMessage fontSize={'sm'} color="red.500">
+              {errors.ipca && errors.ipca.message}
+            </FormErrorMessage>
           </FormControl>
         </VStack>
 
         <VStack alignItems={'left'} spacing={'40px'} w="200px" mx="5px">
-          <FormControl icon label={'Rendimento'}>
-            <ButtonGroup
-              setData={setIndexadtionTypeData}
-              buttons={[
-                { title: 'PRÉ', value: 'pre', id: '0' },
-                { title: 'PÓS', value: 'pos', id: '1' },
-                { title: 'FIXADO', value: 'ipca', id: '2' },
-              ]}
-            />
-          </FormControl>
-          <FormControl
-            label={'Aporte Mensal'}
-            errors={errors.monthlyContribution}
-          >
-            <InputForm
-              name="monthlyContribution"
+          <InputGroup
+            label={'Tipo de indexação'}
+            setIncomingTypeData={setIndexadtionTypeData}
+            buttons={[
+              { title: 'PRÉ', value: 'pre', id: '0' },
+              { title: 'PÓS', value: 'pos', id: '1' },
+              { title: 'FIXADO', value: 'ipca', id: '2' },
+            ]}
+          />
+
+          <FormControl>
+            <FormLabel color={!!errors?.monthlyContribution && 'red'}>
+              Aporte Mensal
+            </FormLabel>
+            <Input
               {...register('monthlyContribution')}
-              errors={errors.monthlyContribution}
+              id={'monthlyContribution'}
+              variant="unstyled"
+              borderBottom={
+                !!errors?.monthlyContribution
+                  ? '1px solid red'
+                  : '1px solid black'
+              }
+              borderRadius={'0px'}
             />
+
+            <FormErrorMessage fontSize={'sm'} color="red.500">
+              {errors.monthlyContribution && errors.monthlyContribution.message}
+            </FormErrorMessage>
           </FormControl>
-          <FormControl label={'Rentabilidade'} errors={errors.revenue}>
-            <InputForm
-              name="revenue"
+
+          <FormControl>
+            <FormLabel color={!!errors?.revenue && 'red'}>
+              Rentabilidade
+            </FormLabel>
+            <Input
               {...register('revenue')}
-              errors={errors.revenue}
+              id={'revenue'}
+              variant="unstyled"
+              borderBottom={
+                !!errors?.revenue ? '1px solid red' : '1px solid black'
+              }
+              borderRadius={'0px'}
             />
+
+            <FormErrorMessage fontSize={'sm'} color="red.500">
+              {errors.revenue && errors.revenue.message}
+            </FormErrorMessage>
           </FormControl>
-          <FormControl label={'CDI (ao ano)'} errors={errors.cdi}>
-            <InputForm
-              name="cdi"
+
+          <FormControl>
+            <FormLabel color={!!errors?.cdi && 'red'}>CDI (ao ano)</FormLabel>
+            <Input
               {...register('cdi')}
-              defaultValue={`${CDI}%`}
-              errors={errors.cdi}
+              id={'cdi'}
+              variant="unstyled"
+              borderBottom={!!errors?.cdi ? '1px solid red' : '1px solid black'}
+              borderRadius={'0px'}
             />
+
+            <FormErrorMessage fontSize={'sm'} color="red.500">
+              {errors.cdi && errors.cdi.message}
+            </FormErrorMessage>
           </FormControl>
         </VStack>
       </Flex>
 
       <Flex flexDir={{ base: 'column', sm: 'row' }}>
         <ButtonReset onClick={() => reset()}>Limpar campos</ButtonReset>
-        <ButtonSubmit
-          correct={!Object.keys(errors).length && !isEmptyWatcher}
-          type="submit"
-          isLoading={isSubmitting}
-        >
-          Simular
-        </ButtonSubmit>
+        <ButtonSubmit type="submit">Simular</ButtonSubmit>
       </Flex>
     </VStack>
   );

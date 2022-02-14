@@ -3,7 +3,7 @@ import { api } from '../../Services/api';
 
 const SimulationsContext = createContext({});
 
-const useSimulations = data => {
+const useSimulations = () => {
   const context = useContext(SimulationsContext);
 
   return context;
@@ -13,6 +13,7 @@ const SimulationsProvider = ({ children }) => {
   const [simulation, setSimulation] = useState(null);
 
   const getSimulation = data => {
+    console.log(data);
     api
       .get(
         `/simulacoes?tipoIndexacao=${data.indexadtionTypeData}&tipoRendimento=${data.incomingTypeData}`
