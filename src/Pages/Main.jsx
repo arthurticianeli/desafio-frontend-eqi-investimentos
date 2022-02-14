@@ -7,8 +7,6 @@ import { useSimulations } from '../Contexts/Simulations';
 function Main() {
   const { simulation } = useSimulations();
 
-  console.log(simulation);
-
   return (
     <Box
       bg="background"
