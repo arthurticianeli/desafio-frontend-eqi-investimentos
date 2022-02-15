@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Flex, Heading } from '@chakra-ui/react';
-import Simulator from '../Components/Simulator';
+import Form from '../Components/Form';
 import SimulationResult from '../Components/SimulationResult';
 import { useSimulations } from '../Contexts/Simulations';
 
@@ -21,7 +21,7 @@ function Main() {
         Simulador de Investimentos
       </Heading>
       <Flex flexWrap={'wrap'}>
-        <Simulator />
+        <Form />
 
         {!!simulation && <SimulationResult />}
       </Flex>

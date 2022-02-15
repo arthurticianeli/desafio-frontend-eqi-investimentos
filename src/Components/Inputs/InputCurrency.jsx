@@ -1,42 +1,35 @@
-import {
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input as InputChakra,
-} from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { Box, FormLabel, Input, Text } from '@chakra-ui/react';
 
-const InputCurrency = ({ label, name, errors, register }) => {
-  const currencyConvert = value => {
-    value = value.replace('.', '').replace(',', '').replace(/\D/g, '');
+import { Controller } from 'react-hook-form';
 
-    const options = { minimumFractionDigits: 2 };
-    const result = new Intl.NumberFormat('pt-BR', options).format(
-      parseFloat(value) / 100
-    );
+// const formatter = value =>
+//   new Intl.NumberFormat('pt-BR', {
+//     style: 'currency',
+//     currency: 'BRL',
+//     minimumFractionDigits: 2,
+//   }).format(value);
 
-    return 'R$ ' + result;
-  };
-
-  const [value, setValue] = useState(currencyConvert(''));
-
+const InputCurrency = ({ label, error, name, control }) => {
   return (
-    <FormControl invalid={errors[name]}>
-      <FormLabel color={!!errors?.[name] && 'red'}>{label}</FormLabel>
-      <InputChakra
+    <Box>
+      <FormLabel color={!!error && 'red'}>{label}</FormLabel>
+      <Controller
+        control={control}
         name={name}
-        id={name}
-        onChange={e => setValue(currencyConvert(e.target.value))}
-        value={value}
-        variant="unstyled"
-        borderBottom={!!errors?.[name] ? '1px solid red' : '1px solid black'}
-        borderRadius={'0px'}
+        render={({ field }) => (
+          <Input
+            isInvalid={error}
+            variant="unstyled"
+            borderBottom={!!error ? '1px solid red' : '1px solid black'}
+            borderRadius={'0px'}
+            {...field}
+          />
+        )}
       />
-
-      <FormErrorMessage fontSize={'sm'} color="red.500">
-        {errors[name] && errors[name].message}
-      </FormErrorMessage>
-    </FormControl>
+      <Text fontSize={'sm'} color={'red.500'} h="20px">
+        {error?.message && error.message}
+      </Text>
+    </Box>
   );
 };
 

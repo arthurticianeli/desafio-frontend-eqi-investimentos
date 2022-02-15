@@ -1,43 +1,26 @@
-import {
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input as ChakraInput,
-} from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Box, FormLabel, Input, Text } from '@chakra-ui/react';
+import { Controller } from 'react-hook-form';
 
-const InputNumber = ({ label, name }) => {
-  const [value, setValue] = useState('');
-
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext();
-
+const InputNumber = ({ label, name, error, control }) => {
   return (
-    <FormControl>
-      <FormLabel color={!!errors && 'red'}>{label}</FormLabel>
+    <Box>
+      <FormLabel color={!!error && 'red'}>{label}</FormLabel>
       <Controller
         control={control}
         name={name}
         render={({ field }) => (
-          <>
-            <ChakraInput
-              invalid={errors?.[name]}
-              id={name}
-              onChange={e => setValue(e.target.value)}
-              value={value}
-              variant="unstyled"
-              borderBottom={errors ? '1px solid red' : '1px solid black'}
-              borderRadius={'0px'}
-              {...field}
-            />
-          </>
+          <Input
+            variant="unstyled"
+            borderBottom={error ? '1px solid red' : '1px solid black'}
+            borderRadius={'0px'}
+            {...field}
+          />
         )}
       />
-      <FormErrorMessage color="red.500"></FormErrorMessage>
-    </FormControl>
+      <Text fontSize={'sm'} color={'red.500'} h="10px">
+        {error?.message && error.message}
+      </Text>
+    </Box>
   );
 };
 
