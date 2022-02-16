@@ -13,7 +13,6 @@ const SimulationsProvider = ({ children }) => {
   const [simulation, setSimulation] = useState(null);
 
   const getSimulation = data => {
-    console.log(data);
     api
       .get(
         `/simulacoes?tipoIndexacao=${data.indexadtionTypeData}&tipoRendimento=${data.incomingTypeData}`
