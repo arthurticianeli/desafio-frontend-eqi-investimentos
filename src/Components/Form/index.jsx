@@ -67,6 +67,15 @@ function Form() {
       ),
   });
 
+  const defaultValues = {
+    initialContribution: '',
+    term: '',
+    monthlyContribution: '',
+    revenue: '',
+    ipca: '10.06%',
+    cdi: '9.15%',
+  };
+
   const {
     control,
     handleSubmit,
@@ -76,15 +85,10 @@ function Form() {
     mode: 'onTouched',
     reValidateMode: 'onSubmit',
     resolver: yupResolver(formSchema),
-    defaultValues: {
-      initialContribution: '',
-      term: '',
-      monthlyContribution: '',
-      revenue: '',
-      ipca: '10.06%',
-      cdi: '9.15%',
-    },
+    defaultValues: defaultValues,
   });
+
+  const isCorrect = JSON.stringify(errors) === '{}';
 
   const onSubmit = data => {
     getSimulation({ ...data, incomingTypeData, indexadtionTypeData });
@@ -185,7 +189,9 @@ function Form() {
 
         <Flex flexDir={{ base: 'column', sm: 'row' }}>
           <ButtonReset onClick={() => reset()}>Limpar campos</ButtonReset>
-          <ButtonSubmit type="submit">Simular</ButtonSubmit>
+          <ButtonSubmit correct={isCorrect && 'true'} type="submit">
+            Simular
+          </ButtonSubmit>
         </Flex>
       </VStack>
     </FormProvider>
