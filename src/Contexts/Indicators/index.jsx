@@ -11,8 +11,8 @@ const useIndicators = () => {
 
 const IndicatorsProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [CDI, setCDI] = useState(0);
-  const [IPCA, setIPCA] = useState(0);
+  const [CDI, setCDI] = useState('');
+  const [IPCA, setIPCA] = useState('');
 
   const getIndicators = async () => {
     setIsLoading(true);

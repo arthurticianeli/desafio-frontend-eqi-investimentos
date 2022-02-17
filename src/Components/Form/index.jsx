@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { Flex, Heading, VStack } from '@chakra-ui/react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
-
-import { Flex, Heading, VStack } from '@chakra-ui/react';
-
 import { useIndicators } from '../../Contexts/Indicators';
 import { ButtonSubmit } from '../Buttons/ButtonSubmit';
 import ButtonReset from '../Buttons/ButtonClean';
-
 import { useSimulations } from '../../Contexts/Simulations';
 import Loading from '../Loading';
 import InputGroup from '../Inputs/InputGroup';
@@ -17,8 +14,13 @@ import InputNumber from '../Inputs/InputNumber';
 import InputPercentage from '../Inputs/InputPercentage';
 
 function Form() {
-  const { isLoading } = useIndicators();
+  const { isLoading, getIndicators } = useIndicators();
   const { getSimulation } = useSimulations();
+
+  useEffect(() => {
+    getIndicators();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [incomingTypeData, setIncomingTypeData] = useState('bruto');
   const [indexadtionTypeData, setIndexadtionTypeData] = useState('pre');

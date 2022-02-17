@@ -11,7 +11,7 @@ import { Controller } from 'react-hook-form';
 
 const InputCurrency = ({ label, error, name, control }) => {
   return (
-    <Box>
+    <Box id={name}>
       <FormLabel color={!!error && 'red'}>{label}</FormLabel>
       <Controller
         control={control}
