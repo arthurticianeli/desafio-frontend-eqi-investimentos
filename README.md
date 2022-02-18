@@ -18,13 +18,21 @@ Foi realizado o deploy da aplicação e do backend, então, é necessário somen
 
 <h2>Ferramentas utilizadas:</h2>
 <ul>
-  <li>ReactJS - Framework de JavaScript que possibilita a fácil criação de UserInterface, além de alta perfomance de renderição por meio do DOM Virtual</li>
-  <li>Chakra UI - Biblioteca de estilização escolhida por sua facilidade de implementação e alteração de design.</li>
-  <li>React Hook Form - Uma das bibliotecas mais utilizadas no mercado para construção de formulários. Diminui a quantidade de código necessário e possui alta performance.</li>
-  <li>Yup - Utilizada junto com o React Hook Form, possibilita a criação rápida de esquemas de validação do formulário.</li>
-   <li>Axios - O Axios é um cliente HTTP que permite utilizar diversos tipos de requisições: GET, POST, PUT, DELETE, etc.</li>
-   <li> ContextAPI - A Context API é um gerenciador de estado global nativa do React. Alternativa ao Redux para aplicações menos complexas.</li>
-  <li> Chart JS - A melhor biblioteca para mostrar gráficos disponível no mercado.</li>
-  <li> Cypress - Utilziada para fazer os testes end-to-end e verificar o estado dos componentes.</li>
+  <li>ReactJS - Framework de JavaScript que possibilita a fácil criação de UserInterface, além de alta perfomance de renderição por meio do DOM Virtual;</li>
+  <li>Chakra UI - Biblioteca de estilização escolhida por sua facilidade de implementação e alteração de design;</li>
+  <li>React Hook Form - Uma das bibliotecas mais utilizadas no mercado para construção de formulários. Diminui a quantidade de código necessário e possui alta performance;</li>
+  <li>Yup - Utilizada junto com o React Hook Form, possibilita a criação rápida de esquemas de validação do formulário;</li>
+   <li>Axios - O Axios é um cliente HTTP que permite utilizar diversos tipos de requisições: GET, POST, PUT, DELETE, etc.;</li>
+   <li> ContextAPI - A Context API é um gerenciador de estado global nativa do React. Alternativa ao Redux para aplicações menos complexas;</li>
+  <li> Chart JS - A melhor biblioteca para mostrar gráficos disponível no mercado;</li>
+  <li> Cypress - Utilziada para fazer os testes end-to-end e verificar o estado dos componentes; e<li>
   <li> Gitflow - Realizei o fluxo de trabalho por meio do Gitflow, criando branchs de features e fix, bem como realizando os merges na development antes de fazer o deploy para a main.</li>
+</ul>
+
+<h2>Pontos de melhoria</h2>
+
+<p>Por se tratar de um MVP, ainda é necessário fazer ajustes na:</p>
+<ul>
+  <li>Responsividade; e</li>
+  <li>Mascáras e validações do form.</li>
 </ul>
