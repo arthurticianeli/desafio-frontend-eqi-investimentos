@@ -18,7 +18,7 @@ const InputGroup = ({ label, setIncomingTypeData, buttons }) => {
   return (
     <FormControl>
       <Flex justifyContent={'space-between'}>
-        <FormLabel>{label}</FormLabel>
+        <FormLabel as="h3">{label}</FormLabel>
         <InfoOutlineIcon />
       </Flex>
       <ButtonGroupChakra w="full" size={'lg'} isAttached>
