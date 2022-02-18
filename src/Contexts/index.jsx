@@ -4,7 +4,7 @@ import { SimulationsProvider } from './Simulations';
 const Providers = ({ children }) => {
   return (
     <IndicatorsProvider>
-      <SimulationsProvider>{children}</SimulationsProvider>;
+      <SimulationsProvider>{children}</SimulationsProvider>
     </IndicatorsProvider>
   );
 };
