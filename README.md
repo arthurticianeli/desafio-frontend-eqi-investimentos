@@ -25,7 +25,7 @@ Foi realizado o deploy da aplicação e do backend, então, é necessário somen
    <li>Axios - O Axios é um cliente HTTP que permite utilizar diversos tipos de requisições: GET, POST, PUT, DELETE, etc.;</li>
    <li> ContextAPI - A Context API é um gerenciador de estado global nativa do React. Alternativa ao Redux para aplicações menos complexas;</li>
   <li> Chart JS - A melhor biblioteca para mostrar gráficos disponível no mercado;</li>
-  <li> Cypress - Utilziada para fazer os testes end-to-end e verificar o estado dos componentes; e<li>
+  <li> Cypress - Utilziada para fazer os testes end-to-end e verificar o estado dos componentes; e</li>
   <li> Gitflow - Realizei o fluxo de trabalho por meio do Gitflow, criando branchs de features e fix, bem como realizando os merges na development antes de fazer o deploy para a main.</li>
 </ul>
 
