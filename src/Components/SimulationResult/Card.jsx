@@ -11,7 +11,7 @@ function Card({ title, value, green }) {
       textAlign={'center'}
       justifyContent={'space-between'}
     >
-      <Heading as="h4" size="sm">
+      <Heading as="h3" size="sm">
         {title}
       </Heading>
       <Text size="md" color={green && 'green'}>
