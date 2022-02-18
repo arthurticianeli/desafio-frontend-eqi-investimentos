@@ -105,6 +105,7 @@ function Form() {
         mb={{ base: '50px', xl: '0px' }}
         as="form"
         onSubmit={handleSubmit(onSubmit)}
+        mx={'auto'}
       >
         <Heading as="h2" size="lg" alignSelf={'flex-start'}>
           Simulador
